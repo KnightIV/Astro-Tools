@@ -11,7 +11,7 @@ Run a q-search algorithm for a given contact binary system using PHOEBE. Tests a
 * `phoebe`
 * `tqdm`
 
-## Align FITS images (`shift-images.py`)
+## Align FITS images (`align-images.py`)
 
 Aligns scientific FITS images such that targets overlap in pixel-space. Uses the FITS [**World Coordinate System**](https://www.atnf.csiro.au/computing/software/wcs/) (**WCS**) to project all images in a single directory onto the first image encountered. This facilitates aperture photometry using tools (eg. IRAF) that rely on pixel coordinates.
 
