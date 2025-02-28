@@ -10,7 +10,7 @@ import phoebe
 from phoebe import u
 phoebe.progressbars_off()
 logger = phoebe.logger(clevel='WARNING')
-logger.setLevel(100)
+logger.setLevel(200)
 
 import argparse
 parser = argparse.ArgumentParser("q-search", 
@@ -85,6 +85,7 @@ def q_search(args: argparse.Namespace):
     qGrid = phoebe.arange(args.q_min, args.q_max + args.q_step, args.q_step)
     
     for incl in args.incl:
+        print(f"Testing inclination {incl*u.degree}")
         BUNDLE = load_bundle(args.path)
         BUNDLE.set_value_all(qualifier='enabled', value=True) # enable all datasets to use
         BUNDLE.add_solver('optimizer.nelder_mead', solver="opt_q_search", maxiter=args.nm_maxiter, 
