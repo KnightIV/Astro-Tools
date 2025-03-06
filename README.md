@@ -3,7 +3,14 @@ Collection of utility scripts made during my master's thesis at the UANL.
 
 ## Contact binary q-search (`q-search.py`)
 
-Run a q-search algorithm for a given contact binary system using PHOEBE. Tests a grid of `q` values for the specified fixed orbital inclination values, finding the best fit by adjusting the system's *fillout factor* and *effective temperature ratio* using a Nelder-Mead Simplex optimizer. Outputs all individual solutions obtained from the optimization.
+Run a q-search algorithm for a given contact binary system using PHOEBE. Tests a grid of `q` values, finding the best fit by adjusting the system's parameters (`incl@binary`, `fillout_factor`, and `teffratio` for contact binaries; `incl@binary`, `teffratio`, `requivsumfrac`, `esinw`, and `ecosw` for (semi-)detached systems) using a Nelder-Mead Simplex optimizer. Outputs all individual solutions obtained from the optimization along with their corresponding `q` value and $\chi^2$ score as a comment in each solution.
+
+Alternatively, this solver can be configured to test only specific orbital inclination values, treating it as a fixed parameter and finding the corresponding solutions to the given `q` grid.
+
+For usage information see:
+```sh
+python q-search.py --help
+```
 
 ### Requirements
 
