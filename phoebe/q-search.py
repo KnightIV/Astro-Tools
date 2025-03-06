@@ -60,8 +60,10 @@ def q_search(args: argparse.Namespace):
 
     fitParameters: list[str]
     if 'contact_envelope' in BUNDLE.components:
+        print("Configuring solver for contact binary")
         fitParameters = ['incl@binary', 'teffratio', 'fillout_factor']
     else:
+        print("Configuring solver for detached/semidetached case; assumes eccentricity and argument of periastron (ecc and per0) are constrained by 'esinw' and 'ecosw'" )
         # assumes eccentricity and per0 are constrained
         fitParameters = ['teffratio@binary@orbit@component', 'requivsumfrac@binary@orbit@component', 
                          'esinw@binary@orbit@component', 'ecosw@binary@orbit@component', 'incl@binary']
