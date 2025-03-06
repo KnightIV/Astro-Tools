@@ -1,7 +1,7 @@
 # Astro-Tools
 Collection of utility scripts made during my master's thesis at the UANL.
 
-## Contact binary q-search (`cbs-q-search.py`)
+## Contact binary q-search (`q-search.py`)
 
 Run a q-search algorithm for a given contact binary system using PHOEBE. Tests a grid of `q` values for the specified fixed orbital inclination values, finding the best fit by adjusting the system's *fillout factor* and *effective temperature ratio* using a Nelder-Mead Simplex optimizer. Outputs all individual solutions obtained from the optimization.
 
