@@ -8,16 +8,20 @@ import phoebe
 
 LOCK = mp.Lock()
 
-# region PHOEBE q-search
 def printsync_log(msg: str, parent_dir: str, print_console=False):
-    logPath = os.path.join(parent_dir, "q-solutions", ".log")
+    logPath = os.path.join(parent_dir, ".log")
     with LOCK:
         with open(logPath, "a+") as logFile:
             logFile.write(f"[{datetime.datetime.now()}] {msg}\n")
         
         if print_console:
             print(f"[{os.getpid()}][{datetime.datetime.now()}] {msg}")
-               
+
+def printsync_console(msg: str):
+    with LOCK:        
+        print(f"[{os.getpid()}][{datetime.datetime.now()}] {msg}")
+
+# region PHOEBE q-search               
 def load_bundle(path: str) -> phoebe.Bundle:
     print(f"Reading in bundle from {path}")
 
@@ -41,7 +45,7 @@ def optimize_q(b: phoebe.Bundle, q: float, solution_directory: str) -> str:
     solution = "opt_q_search_solution"
     exportSolPath = os.path.join(solution_directory, f"{q:.4f}.sol")
     if os.path.exists(exportSolPath):
-        printsync_log(f"{q} already solved", print_console=True)
+        printsync_log(f"{q} already solved", solution_directory, print_console=True)
         return
     b.set_value(qualifier='q', value=q)
     b.run_solver(solver="opt_q_search", solution=solution, overwrite=True)

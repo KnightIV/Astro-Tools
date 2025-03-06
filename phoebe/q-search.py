@@ -33,10 +33,13 @@ parser.add_argument("--solution-dir", required=False, default=os.getcwd(),
 BUNDLE: phoebe.Bundle
 SOLUTION_DIRECTORY: str
 
-def optimize_q(q: float) -> str:
+def optimize_q(q: float) -> str | None:
     with utils.LOCK:
         b = BUNDLE.copy()
-    return utils.optimize_q(b, q, SOLUTION_DIRECTORY)
+    try:
+        return utils.optimize_q(b, q, SOLUTION_DIRECTORY)
+    except ValueError:
+        utils.printsync_log(f"Could not solve for q={q:.4f}", SOLUTION_DIRECTORY)
 
 def solve(n_procs: int, q_grid: list[float]):
     os.makedirs(SOLUTION_DIRECTORY, exist_ok=True)
@@ -75,6 +78,7 @@ def q_search(args: argparse.Namespace):
     BUNDLE.set_value_all(qualifier='enabled', dataset=BUNDLE.datasets, value=True) # enable all datasets to use
     BUNDLE.disable_dataset('mesh01')
     BUNDLE.add_solver('optimizer.nelder_mead', solver="opt_q_search", maxiter=args.nm_maxiter, fit_parameters=fitParameters)
+    BUNDLE.run_all_constraints()
     
     SOLUTION_DIRECTORY = os.path.join(args.solution_dir, "q-solutions")
     if args.incl:
