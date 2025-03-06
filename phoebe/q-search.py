@@ -58,6 +58,8 @@ def q_search(args: argparse.Namespace):
 
     qGrid = phoebe.arange(args.q_min, args.q_max + args.q_step, args.q_step)
 
+    BUNDLE = utils.load_bundle(args.path)
+
     fitParameters: list[str]
     if 'contact_envelope' in BUNDLE.components:
         print("Configuring solver for contact binary")
@@ -70,7 +72,6 @@ def q_search(args: argparse.Namespace):
     if args.incl:
         fitParameters.remove('incl@binary')
 
-    BUNDLE = utils.load_bundle(args.path)
     BUNDLE.set_value_all(qualifier='enabled', dataset=BUNDLE.datasets, value=True) # enable all datasets to use
     BUNDLE.disable_dataset('mesh01')
     BUNDLE.add_solver('optimizer.nelder_mead', solver="opt_q_search", maxiter=args.nm_maxiter, fit_parameters=fitParameters)
