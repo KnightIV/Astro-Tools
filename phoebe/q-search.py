@@ -68,9 +68,11 @@ def q_search(args: argparse.Namespace):
         print("Configuring solver for contact binary")
         fitParameters = ['incl@binary', 'teffratio', 'fillout_factor']
     else:
-        print("Configuring solver for detached/semidetached case; assumes eccentricity and argument of periastron (ecc and per0) are constrained by 'esinw' and 'ecosw'" )
+        print("Configuring solver for detached/semidetached case; "
+                    "assumes eccentricity and argument of periastron (ecc and per0) are constrained by 'esinw' and 'ecosw' "
+                    "as well as 'requivratio' and 'requivsumfrac' are unconstrained" )
         # assumes eccentricity and per0 are constrained
-        fitParameters = ['teffratio@binary@orbit@component', 'requivsumfrac@binary@orbit@component', 
+        fitParameters = ['teffratio@binary@orbit@component', 'requivsumfrac@binary@orbit@component', 'requivratio',
                          'esinw@binary@orbit@component', 'ecosw@binary@orbit@component', 'incl@binary']
     if args.incl:
         fitParameters.remove('incl@binary')
