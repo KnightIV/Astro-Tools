@@ -49,8 +49,12 @@ def optimize_q(b: phoebe.Bundle, q: float, solution_directory: str) -> str:
         return
     b.set_value(qualifier='q', value=q)
     b.run_solver(solver="opt_q_search", solution=solution, overwrite=True)
+    solutionPath = b.filter(context='solution', solution=solution, check_visible=False).save(exportSolPath, incl_uniqueid=True)
     b.adopt_solution(solution)
-    b.run_compute(model='q_solution_model')
-    b.set_value(qualifier='comments', solution=solution, value=f"{q}|{b.calculate_chi2(model='q_solution_model')}")
-    return b.filter(context='solution', solution=solution, check_visible=False).save(exportSolPath, incl_uniqueid=True);
+    try:
+        b.run_compute(model='q_solution_model')
+        b.set_value(qualifier='comments', solution=solution, value=f"{q}|{b.calculate_chi2(model='q_solution_model')}")
+    except ValueError as e:
+        printsync_log(f"Failed to run model for q={q} | {e}", parent_dir=solution_directory, print_console=True)
+    return solutionPath
 # endregion

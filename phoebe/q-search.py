@@ -38,8 +38,9 @@ def optimize_q(q: float) -> str | None:
         b = BUNDLE.copy()
     try:
         return utils.optimize_q(b, q, SOLUTION_DIRECTORY)
-    except ValueError:
-        utils.printsync_log(f"Could not solve for q={q:.4f}", SOLUTION_DIRECTORY)
+    except Exception as e:
+        utils.printsync_log(f"Could not solve for q={q:.4f} | {e}", SOLUTION_DIRECTORY)
+        return None
 
 def solve(n_procs: int, q_grid: list[float]):
     os.makedirs(SOLUTION_DIRECTORY, exist_ok=True)
