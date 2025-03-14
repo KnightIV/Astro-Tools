@@ -3,10 +3,10 @@ import multiprocessing as mp
 
 import tqdm
 
-import phoebe_tools
-from phoebe_tools import u
-phoebe_tools.progressbars_off()
-logger = phoebe_tools.logger(clevel='WARNING')
+import phoebe
+from phoebe import u
+phoebe.progressbars_off()
+logger = phoebe.logger(clevel='WARNING')
 logger.setLevel(200)
 
 import utils
@@ -30,7 +30,7 @@ parser.add_argument("--nm-maxiter", type=int, required=False, default=250,
 parser.add_argument("--solution-dir", required=False, default=os.getcwd(),
                                     help="(Optional) Parent directory path to place solution directory 'q-solutions'; defaults to cwd")
 
-BUNDLE: phoebe_tools.Bundle
+BUNDLE: phoebe.Bundle
 SOLUTION_DIRECTORY: str
 
 def optimize_q(q: float) -> str | None:
@@ -60,7 +60,7 @@ def q_search(args: argparse.Namespace):
     global BUNDLE
     global SOLUTION_DIRECTORY
 
-    qGrid = phoebe_tools.arange(args.q_min, args.q_max + args.q_step, args.q_step)
+    qGrid = phoebe.arange(args.q_min, args.q_max + args.q_step, args.q_step)
 
     BUNDLE = utils.load_bundle(args.path)
 
