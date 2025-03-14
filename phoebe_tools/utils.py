@@ -4,7 +4,7 @@ import gzip
 import shutil
 import multiprocessing as mp
 
-import phoebe
+import phoebe_tools
 
 LOCK = mp.Lock()
 
@@ -22,10 +22,10 @@ def printsync_console(msg: str):
         print(f"[{os.getpid()}][{datetime.datetime.now()}] {msg}")
 
 # region PHOEBE q-search               
-def load_bundle(path: str) -> phoebe.Bundle:
+def load_bundle(path: str) -> phoebe_tools.Bundle:
     print(f"Reading in bundle from {path}")
 
-    b: phoebe.Bundle
+    b: phoebe_tools.Bundle
     jsonBundlePath = path
     if path.endswith('.gz'):
         jsonBundlePath = path.replace('.gz', '')
@@ -33,11 +33,11 @@ def load_bundle(path: str) -> phoebe.Bundle:
             with open(jsonBundlePath, 'wb') as f_out:
                 shutil.copyfileobj(f_in, f_out)
 
-    b = phoebe.load(jsonBundlePath)
+    b = phoebe_tools.load(jsonBundlePath)
     if jsonBundlePath != path: os.remove(jsonBundlePath) # used temp file
     return b
 
-def optimize_q(b: phoebe.Bundle, q: float, solution_directory: str) -> str:
+def optimize_q(b: phoebe_tools.Bundle, q: float, solution_directory: str) -> str:
     """
     Runs the solver `opt_q_search` given the fixed `q` value. Places the resulting solution in `solution_directory/{q}.sol`.
     The solution's comments contains the given `q` value as well as the calculated `chi2` of the adopted solution's model.
